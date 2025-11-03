@@ -1,0 +1,127 @@
+[build-system]
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "spamil"
+version = "0.0.1"
+description = "Multiple instance learning with spatial transcriptomics for interpretable patient-level predictions."
+authors = ["Simon Grouard <simon.grouard@owkin.com>"]
+readme = "README.md"
+
+repository = "https://github.com/owkin/SpaMIL"
+
+classifiers = [
+  "Development Status :: 2 - Pre-Alpha",
+  "Natural Language :: English",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.11"
+numpy = "*"
+pandas = "*"
+scipy = "*"
+scikit-learn = "*"
+torch = "2.3.1"
+anndata = ">=0.11.0"
+scanpy = ">=1.10.1"
+scvi-tools = "1.3.0"
+loguru = "*"
+ml-collections = "0.1.1"
+dill = ">=0.3.7"
+
+
+[tool.poetry.group.dev]
+optional = true
+[tool.poetry.group.dev.dependencies]
+nbconvert = "*"
+notebook = "*"
+
+[tool.poetry.group.linting]
+optional = true
+[tool.poetry.group.linting.dependencies]
+mypy = "1.15.0"
+pre-commit = ">=2.20.0"
+pydoclint = ">=0.3.3, <0.3.11"
+ruff = "0.9.9"
+pandas-stubs = "*"
+types-docutils = "*"
+types-python-dateutil = "*"
+types-setuptools = "*"
+types-Jinja2 = "*"
+types-MarkupSafe = "*"
+types-PyYAML = "*"
+typing_extensions = "*"
+
+[tool.poetry.group.testing]
+optional = true
+[tool.poetry.group.testing.dependencies]
+pytest = "*"
+coverage = "*"
+pytest-cov = "*"
+pytest-runner = "*"
+pytest-profiling = "*"
+lxml = { extras = [
+  "html_clean",
+], version = "*" } # issues with pytest, need install
+
+[tool.ruff]
+exclude = [
+  ".git",
+  ".github",
+  ".dvc",
+  "__pycache__",
+  ".venv",
+  ".mypy_cache",
+  ".ruff_cache",
+  ".pytest_cache",
+  "conf.py",
+]
+lint.ignore = [
+  "B008",  # do not perform function calls in argument defaults
+  "C901",  # too complex
+  "D105",  # undocumented magic method
+  "E501",  # line too long, handled by black
+  "E731",  # lambda-assignment
+  "PLR0904", # too many public methods
+  "PLR0913", # too many arguments
+  "PLR2004", # magic value comparison
+  "B019",    # use of cache methods
+  "B009",    # getattr with constant value
+  "N812",    # lowercase imported as non constant
+  "PLW2901", # loop variable overwritten by assignment
+  "PT011",   # broad pytest errors
+  "PLR0912", # too many branches
+  "PLR0915", # too many statements
+]
+lint.select = [
+  "D",     # pydocstyle
+  "E",     # pycodestyle errors
+  "W",     # pycodestyle warnings
+  "F",     # pyflakes
+  "I",     # isort
+  "N",     # pep8-naming conventions
+  "C",     # flake8-comprehensions
+  "B",     # flake8-bugbear
+  "PL",    # pylint
+  "PT",    # flake8-pytest-style
+  "C90",   # mccabe included in flake8
+  "ASYNC", # flake8-async
+]
+line-length = 88 # Must be consistent with black parameter
+target-version = "py39" # Must be aligned with the Python lower bound
+
+[tool.ruff.lint.isort]
+known-first-party = ["spamil"]
+lines-after-imports = 2
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401"]
